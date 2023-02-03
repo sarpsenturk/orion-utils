@@ -5,6 +5,9 @@ project(orion-utils
         DESCRIPTION "Common utilities for the orion game engine"
         LANGUAGES CXX)
 
+# Find dependencies
+find_package(fmt REQUIRED)
+
 include(GNUInstallDirs)
 
 set(ORION_UTILS_TOP_LEVEL ${PROJECT_IS_TOP_LEVEL})
@@ -24,8 +27,10 @@ target_compile_features(orion-utils INTERFACE cxx_std_20)
 set(orion_utils_include_dirs
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
-
 target_include_directories(orion-utils INTERFACE ${orion_utils_include_dirs})
+
+# Link with dependencies
+target_link_libraries(orion-utils INTERFACE fmt::fmt)
 
 # Set export name for consistency between import and build targets
 set_target_properties(orion-utils PROPERTIES EXPORT_NAME utils LINKER_LANGUAGE CXX)

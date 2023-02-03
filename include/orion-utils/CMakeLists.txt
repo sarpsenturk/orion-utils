@@ -4,7 +4,6 @@ target_sources(
         FILES
         assertion.h
         enum.h
-        format.h
         static_vector.h
         type.h
         uninitialized.h

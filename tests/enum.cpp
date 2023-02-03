@@ -38,14 +38,14 @@ namespace
             One
         };
 
-        EXPECT_EQ(fmt_lib::format("{}", Enum::Zero), "0");
-        EXPECT_EQ(fmt_lib::format("{}", Enum::One), "1");
+        EXPECT_EQ(fmt::format("{}", Enum::Zero), "0");
+        EXPECT_EQ(fmt::format("{}", Enum::One), "1");
     }
 
     TEST(Enum, ToStringOverloaded)
     {
-        EXPECT_EQ(fmt_lib::format("{}", StringEnum::First), "First");
-        EXPECT_EQ(fmt_lib::format("{}", StringEnum::Second), "Second");
-        EXPECT_EQ(fmt_lib::format("{}", static_cast<StringEnum>(-1)), "Unknown");
+        EXPECT_EQ(fmt::format("{}", StringEnum::First), "First");
+        EXPECT_EQ(fmt::format("{}", StringEnum::Second), "Second");
+        EXPECT_EQ(fmt::format("{}", static_cast<StringEnum>(-1)), "Unknown");
     }
 } // namespace
