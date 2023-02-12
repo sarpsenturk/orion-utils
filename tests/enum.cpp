@@ -9,7 +9,7 @@ enum class StringEnum {
 };
 
 template<>
-struct orion::enum_traits<StringEnum> {
+struct orion::enum_traits<StringEnum> : orion::default_enum_traits<StringEnum> {
     static constexpr auto to_string(StringEnum value) noexcept
     {
         switch (value) {
@@ -20,6 +20,17 @@ struct orion::enum_traits<StringEnum> {
         }
         return "Unknown";
     }
+};
+
+enum class Bitflags : std::uint8_t {
+    One = 1,
+    Two = 2,
+    Four = 4,
+};
+
+template<>
+struct orion::enum_traits<Bitflags> : orion::default_enum_traits<Bitflags> {
+    static constexpr bool bitwise_enabled = true;
 };
 
 namespace
@@ -47,5 +58,22 @@ namespace
         EXPECT_EQ(fmt::format("{}", StringEnum::First), "First");
         EXPECT_EQ(fmt::format("{}", StringEnum::Second), "Second");
         EXPECT_EQ(fmt::format("{}", static_cast<StringEnum>(-1)), "Unknown");
+    }
+
+    TEST(Enum, BitwiseOperators)
+    {
+        EXPECT_EQ(orion::to_underlying(~Bitflags::One), 254);
+
+        EXPECT_EQ(orion::to_underlying(Bitflags::Two & Bitflags::Two), 2);
+        EXPECT_EQ(orion::to_underlying(Bitflags::Two & Bitflags::One), 0);
+
+        EXPECT_EQ(orion::to_underlying(Bitflags::One | Bitflags::Two), 3);
+        EXPECT_EQ(orion::to_underlying(Bitflags::Two | Bitflags::Two), 2);
+
+        EXPECT_EQ(orion::to_underlying(Bitflags::Four ^ Bitflags::Four), 0);
+        EXPECT_EQ(orion::to_underlying(Bitflags::One ^ Bitflags::Two), 3);
+
+        EXPECT_EQ(Bitflags::One << 1, Bitflags::Two);
+        EXPECT_EQ(Bitflags::Two >> 1, Bitflags::One);
     }
 } // namespace
