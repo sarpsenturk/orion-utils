@@ -1,5 +1,14 @@
 cmake_minimum_required(VERSION 3.21)
 
+# Build/configuration options
+option(ORION_UTILS_TEST "Build tests for orion::utils" ${ORION_UTILS_TOP_LEVEL})
+option(ORION_UTILS_INSTALL "Create install target for orion::utils" ${ORION_UTILS_TOP_LEVEL})
+
+if (ORION_UTILS_TEST)
+    list(APPEND VCPKG_MANIFEST_FEATURES "tests")
+endif ()
+
+
 project(orion-utils
         VERSION 0.1.0
         DESCRIPTION "Common utilities for the orion game engine"
@@ -11,10 +20,6 @@ find_package(fmt REQUIRED)
 include(GNUInstallDirs)
 
 set(ORION_UTILS_TOP_LEVEL ${PROJECT_IS_TOP_LEVEL})
-
-# Build/configuration options
-option(ORION_UTILS_TEST "Build tests for orion::utils" ${ORION_UTILS_TOP_LEVEL})
-option(ORION_UTILS_INSTALL "Create install target for orion::utils" ${ORION_UTILS_TOP_LEVEL})
 
 # Declare the library
 add_library(orion-utils INTERFACE "")
