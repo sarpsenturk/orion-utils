@@ -28,7 +28,7 @@ namespace
         }
     };
 
-    TEST(MemoryUninitializedAlgos, DefaultContruct)
+    TEST(Uninitialized, DefaultContruct)
     {
         constexpr int count{3};
         alignas(alignof(DefaultConstructable)) unsigned char memory[count * sizeof(DefaultConstructable)];
@@ -45,7 +45,7 @@ namespace
         std::destroy(first, last);
     }
 
-    TEST(MemoryUninitializedAlgos, Fill)
+    TEST(Uninitialized, Fill)
     {
         constexpr int count{3};
         alignas(alignof(DefaultConstructable)) unsigned char memory[count * sizeof(DefaultConstructable)];
@@ -62,7 +62,7 @@ namespace
         std::destroy(first, last);
     }
 
-    TEST(MemoryUninitializedAlgos, Copy)
+    TEST(Uninitialized, Copy)
     {
         const std::array<MoveCopyTest, 3> array;
 
@@ -83,7 +83,7 @@ namespace
         std::destroy(first, last);
     }
 
-    TEST(MemoryUninitializedAlgos, Move)
+    TEST(Uninitialized, Move)
     {
         std::array<MoveCopyTest, 3> array;
 

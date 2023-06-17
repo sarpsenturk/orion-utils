@@ -2,32 +2,30 @@
 
 #include <gtest/gtest.h>
 
-TEST(Type, AnyOfValid)
+namespace
 {
-    static_assert(orion::any_of<int, char, bool, int, float>);
-}
+    TEST(Type, AnyOf)
+    {
+        static_assert(orion::any_of<int, char, bool, int, float>);
+        static_assert(!orion::any_of<int, char, bool, float>);
+    }
 
-TEST(Type, AnyOfInvalid)
-{
-    static_assert(!orion::any_of<int, char, bool, float>);
-}
+    TEST(Type, AllOf)
+    {
+        static_assert(orion::all_of<int, int, int, int>);
+        static_assert(!orion::all_of<int, int, int, bool>);
+    }
 
-TEST(Type, AllOfValid)
-{
-    static_assert(orion::all_of<int, int, int, int>);
-}
+    TEST(Type, NotEmpty)
+    {
+        static_assert(orion::not_empty<int>);
+        static_assert(!orion::not_empty<>);
+    }
 
-TEST(Type, AllOfInvalid)
-{
-    static_assert(!orion::all_of<int, int, int, bool>);
-}
-
-TEST(Type, NotEmptyValid)
-{
-    static_assert(orion::not_empty<int>);
-}
-
-TEST(Type, NotEmptyInvalid)
-{
-    static_assert(!orion::not_empty<>);
-}
+    TEST(Type, ToUnderlying)
+    {
+        using underlying = std::uint8_t;
+        enum class Enum : underlying {};
+        static_assert(std::is_same_v<underlying, decltype(orion::to_underlying(std::declval<Enum>()))>);
+    }
+} // namespace

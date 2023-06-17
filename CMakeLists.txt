@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.21)
 
 # Build/configuration options
-option(ORION_UTILS_TEST "Build tests for orion::utils" ${ORION_UTILS_TOP_LEVEL})
-option(ORION_UTILS_INSTALL "Create install target for orion::utils" ${ORION_UTILS_TOP_LEVEL})
+option(ORION_UTILS_DEVELOPER_MODE "Enable developer mode" ON)
+option(ORION_UTILS_TEST "Build tests for orion::utils" ${ORION_UTILS_DEVELOPER_MODE})
+option(ORION_UTILS_INSTALL "Create install target for orion::utils" ${ORION_UTILS_DEVELOPER_MODE})
 
 if (ORION_UTILS_TEST)
     list(APPEND VCPKG_MANIFEST_FEATURES "tests")

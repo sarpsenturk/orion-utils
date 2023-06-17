@@ -3,7 +3,6 @@ target_sources(
         FILE_SET public_headers
         FILES
         assertion.h
-        enum.h
         static_vector.h
         type.h
         uninitialized.h
